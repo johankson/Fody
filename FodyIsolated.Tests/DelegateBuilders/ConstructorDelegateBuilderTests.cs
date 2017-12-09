@@ -56,12 +56,19 @@ public class ConstructorDelegateBuilderTests
     }
 
     [Test]
-    public void Should_construct_When_is_Valid()
+    public void Find_and_execute()
     {
         var type = typeof(ValidClass);
         var anObject = type.BuildConstructorDelegate()();
-        Assert.IsNotNull(anObject);
-        Assert.AreEqual(type,anObject.GetType());
+        Assert.AreEqual(type, anObject.GetType());
+    }
+
+    [Test]
+    public void Find_and_execute_from_interface()
+    {
+        var type = typeof(WeaverFromBase);
+        var anObject = type.BuildConstructorDelegate()();
+        Assert.AreEqual(type, anObject.GetType());
     }
 
     public class NestedPublicClass

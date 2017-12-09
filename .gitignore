@@ -44,7 +44,7 @@ packages/
 ForIntegration/
 NuGetCecilBuild/
 NugetBuild/
-ChocolateyNuGetBuild/
+NuGetHelpersBuild/
 
 # Visual Studio profiler
 *.psess

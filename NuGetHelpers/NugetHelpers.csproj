@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="PepitaPackage" Version="1.21.6" />
+    <ProjectReference Include="..\Fody\Fody.csproj" />
+    <ProjectReference Include="..\FodyIsolated\FodyIsolated.csproj" />
+  </ItemGroup>
+  <Target Name="NuGetBuild" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <FilesToDelete Include="$(SolutionDir)NuGetHelpersBuild\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <MakeDir Directories="$(SolutionDir)NuGetHelpersBuild" />
+    <MakeDir Directories="$(SolutionDir)NuGetHelpersBuild" />
+    <Copy SourceFiles="$(SolutionDir)FodyHelpers\bin\$(ConfigurationName)\net452\FodyHelpers.dll" DestinationFolder="$(SolutionDir)NuGetHelpersBuild" />
+    <Copy SourceFiles="$(SolutionDir)FodyHelpers\bin\$(ConfigurationName)\net452\FodyHelpers.pdb" DestinationFolder="$(SolutionDir)NuGetHelpersBuild" />
+    <Copy SourceFiles="$(SolutionDir)FodyHelpers\bin\$(ConfigurationName)\net452\FodyHelpers.xml" DestinationFolder="$(SolutionDir)NuGetHelpersBuild" />
+    <Copy SourceFiles="$(SolutionDir)NugetHelpers\FodyHelpers.nuspec" DestinationFolder="$(SolutionDir)NuGetHelpersBuild" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetHelpersBuild" MetadataAssembly="$(SolutionDir)NuGetHelpersBuild\FodyHelpers.dll" />
+  </Target>
+</Project>

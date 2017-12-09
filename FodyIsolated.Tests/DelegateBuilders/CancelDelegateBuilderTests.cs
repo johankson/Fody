@@ -15,9 +15,17 @@ public class CancelDelegateBuilderTests
     }
 
     [Test]
-    public void Should_find_method_When_cancel_is_valid()
+    public void Find_and_execute()
     {
-        typeof(ValidClass).BuildCancelDelegate()(new ValidClass());
+        var action = typeof(ValidClass).BuildCancelDelegate();
+        action(new ValidClass());
+    }
+
+    [Test]
+    public void Find_and_execute_from_interface()
+    {
+        var action = typeof(WeaverFromBase).BuildCancelDelegate();
+        action(new WeaverFromBase());
     }
 
     public class ValidClass

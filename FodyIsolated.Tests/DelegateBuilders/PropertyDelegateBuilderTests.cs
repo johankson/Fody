@@ -11,9 +11,11 @@ public class PropertyDelegateBuilderTests : BaseClassSupplyingInheritedMembers
 // ReSharper disable UnusedMember.Local
     string PrivateProperty { get; set; }
 // ReSharper restore UnusedMember.Local
+
 // ReSharper disable UnassignedField.Global
     public string Field;
 // ReSharper restore UnassignedField.Global
+
     public static string StaticField;
 
     [Test]
@@ -36,18 +38,20 @@ public class PropertyDelegateBuilderTests : BaseClassSupplyingInheritedMembers
     {
         var setterDelegate = GetType().BuildPropertySetDelegate<string>("Field");
         setterDelegate(this, "aString");
-        Assert.AreEqual("aString",Field);
+        Assert.AreEqual("aString", Field);
     }
 
     [Test]
-    public void Should_be_able_to_set_inherited_properties() {
+    public void Should_be_able_to_set_inherited_properties()
+    {
         var setterDelegate = GetType().BuildPropertySetDelegate<string>(nameof(InheritedProperty));
         setterDelegate(this, "blah");
         Assert.AreEqual("blah", InheritedProperty);
     }
 
     [Test]
-    public void Should_be_able_to_set_inherited_fields() {
+    public void Should_be_able_to_set_inherited_fields()
+    {
         var setterDelegate = GetType().BuildPropertySetDelegate<string>(nameof(InheritedField));
         setterDelegate(this, "blah");
         Assert.AreEqual("blah", InheritedField);

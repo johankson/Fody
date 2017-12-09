@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Moq;

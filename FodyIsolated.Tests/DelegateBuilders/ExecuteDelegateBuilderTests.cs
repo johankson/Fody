@@ -16,9 +16,17 @@ public class ExecuteDelegateBuilderTests
     }
 
     [Test]
-    public void Should_find_method_When_execute_is_valid()
+    public void Find_and_execute()
     {
-        typeof(ValidClass).BuildExecuteDelegate()(new ValidClass());
+        var action = typeof(ValidClass).BuildExecuteDelegate();
+        action(new ValidClass());
+    }
+
+    [Test]
+    public void Find_and_execute_from_interface()
+    {
+        var action = typeof(WeaverFromBase).BuildExecuteDelegate();
+        action(new WeaverFromBase());
     }
 
     public class ValidClass

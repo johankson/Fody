@@ -1,11 +1,20 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using Fody;
 
 public static class ExecuteDelegateBuilder
 {
     public static Action<object> BuildExecuteDelegate(this Type weaverType)
     {
+        if (weaverType.InheritsFromBaseWeaver())
+        {
+            return weaver =>
+            {
+                var baseModuleWeaver = (BaseModuleWeaver)weaver;
+                baseModuleWeaver.Execute();
+            };
+        }
         var executeMethod = weaverType.GetMethod("Execute", BindingFlags.Instance | BindingFlags.Public, null, new Type[] {}, null);
         if (executeMethod == null)
         {

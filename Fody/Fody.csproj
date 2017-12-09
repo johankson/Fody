@@ -6,9 +6,7 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FodyHelpers">
-      <HintPath>..\ForIntegration\FodyHelpers.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\FodyHelpers\FodyHelpers.csproj" />
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />

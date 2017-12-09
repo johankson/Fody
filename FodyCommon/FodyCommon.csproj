@@ -6,10 +6,8 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FodyHelpers">
-      <HintPath>..\ForIntegration\FodyHelpers.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <ProjectReference Include="..\FodyHelpers\FodyHelpers.csproj" />
     <Reference Include="Mono.Cecil">
       <HintPath>..\Lib\Cecil\net40\Mono.Cecil.dll</HintPath>
     </Reference>

@@ -1,10 +1,10 @@
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class ShouldStartSinceFileChangedTests
 {
-    [Test]
+    [Fact]
     public void NotProcessedByFody()
     {
         var processor = new Processor
@@ -12,10 +12,10 @@ public class ShouldStartSinceFileChangedTests
                 Logger = new Mock<BuildLogger>().Object,
                 AssemblyFilePath = typeof (string).Assembly.CodeBase.Replace("file:///", "")
             };
-        Assert.IsTrue(processor.ShouldStartSinceFileChanged());
+        Assert.True(processor.ShouldStartSinceFileChanged());
     }
 
-    [Test]
+    [Fact]
     public void ProcessedByFody()
     {
         var processor = new Processor
@@ -23,7 +23,7 @@ public class ShouldStartSinceFileChangedTests
                 Logger = new Mock<BuildLogger>().Object,
                 AssemblyFilePath = GetType().Assembly.CodeBase.Replace("file:///", "")
             };
-        Assert.IsFalse(processor.ShouldStartSinceFileChanged());
+        Assert.False(processor.ShouldStartSinceFileChanged());
     }
 }
 

@@ -1,11 +1,11 @@
 using System.IO;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class WeaverProjectFileFinderTests
 {
-    [Test]
+    [Fact]
     public void Found()
     {
         var currentDirectory = AssemblyLocation.CurrentDirectory;
@@ -20,12 +20,12 @@ public class WeaverProjectFileFinderTests
         };
 
         processor.FindWeaverProjectFile();
-        Assert.IsTrue(processor.FoundWeaverProjectFile);
+        Assert.True(processor.FoundWeaverProjectFile);
         loggerMock.Verify();
     }
 
     //TODO: add tests where weavers is in references for ncrunch support
-    [Test]
+    [Fact]
     public void NotFound()
     {
         var currentDirectory = AssemblyLocation.CurrentDirectory;
@@ -41,7 +41,7 @@ public class WeaverProjectFileFinderTests
         };
 
         processor.FindWeaverProjectFile();
-        Assert.IsFalse(processor.FoundWeaverProjectFile);
+        Assert.False(processor.FoundWeaverProjectFile);
         loggerMock.Verify();
     }
 }

@@ -1,18 +1,15 @@
+using System;
 using System.IO;
 
 public static class AssemblyLocation
 {
     static AssemblyLocation()
     {
+        //Use codebase because location fails for unit tests.
         var assembly = typeof(AssemblyLocation).Assembly;
-
-        var path = assembly.Location
-            .Replace("file:///", "")
-            .Replace("file://", "")
-            .Replace(@"file:\\\", "")
-            .Replace(@"file:\\", "");
-
-        CurrentDirectory = Path.GetDirectoryName(path);
+        var uri = new UriBuilder(assembly.CodeBase);
+        var currentAssemblyPath = Uri.UnescapeDataString(uri.Path);
+        CurrentDirectory = Path.GetDirectoryName(currentAssemblyPath);
     }
 
     public static string CurrentDirectory;

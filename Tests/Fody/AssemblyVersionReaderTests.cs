@@ -1,11 +1,11 @@
 using System.IO;
 using Fody;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class AssemblyVersionReaderTests
 {
-    [Test]
+    [Fact]
     public void BadImage()
     {
         var path = Path.Combine(AssemblyLocation.CurrentDirectory, "Fody/BadAssembly.dll");

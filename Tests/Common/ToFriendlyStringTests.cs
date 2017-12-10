@@ -1,11 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class ToFriendlyStringTests
 {
-    [Test]
-    [Explicit]
+    [Fact(Skip = "need to clean up machine based stuff")]
     public void ToFriendlyName()
     {
         var currentDirectory = AssemblyLocation.CurrentDirectory.ToLowerInvariant()
@@ -34,7 +33,7 @@ targetsite:
 void throwexception2()
 ";
 // ReSharper restore StringLiteralTypo
-            Assert.AreEqual(expected, friendlyString);
+            Assert.Equal(expected, friendlyString);
         }
     }
 

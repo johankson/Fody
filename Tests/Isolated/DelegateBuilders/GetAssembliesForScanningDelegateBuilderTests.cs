@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class GetAssembliesForScanningDelegateBuilderTests
 {
-    [Test]
+    [Fact]
     public void Should_Not_throw_When_no_method()
     {
         typeof(NoExecuteClass).BuildGetAssembliesForScanningDelegate();
@@ -15,14 +15,14 @@ public class GetAssembliesForScanningDelegateBuilderTests
     {
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildGetAssembliesForScanningDelegate();
         action(new ValidClass());
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildGetAssembliesForScanningDelegate();
@@ -37,7 +37,7 @@ public class GetAssembliesForScanningDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_not_public()
     {
         typeof(NonPublicClass).BuildGetAssembliesForScanningDelegate();
@@ -53,7 +53,7 @@ public class GetAssembliesForScanningDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_is_static()
     {
         typeof(StaticExecuteClass).BuildGetAssembliesForScanningDelegate();
@@ -67,7 +67,7 @@ public class GetAssembliesForScanningDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_thrown_inner_exception_When_delegate_is_executed()
     {
         var action = typeof (ThrowFromExecuteClass).BuildGetAssembliesForScanningDelegate();

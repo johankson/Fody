@@ -1,29 +1,29 @@
 using System;
 using Fody;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class ExecuteDelegateBuilderTests
 {
-    [Test]
+    [Fact]
     public void Should_throw_When_no_method()
     {
         var exception = Assert.Throws<WeavingException>(() => typeof(NoExecuteClass).BuildExecuteDelegate());
-        Assert.AreEqual(exception.Message, "'ExecuteDelegateBuilderTests+NoExecuteClass' must contain a public instance method named 'Execute'.");
+        Assert.Equal("'ExecuteDelegateBuilderTests+NoExecuteClass' must contain a public instance method named 'Execute'.",exception.Message);
     }
 
     public class NoExecuteClass
     {
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildExecuteDelegate();
         action(new ValidClass());
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildExecuteDelegate();
@@ -37,11 +37,11 @@ public class ExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_throw_When_method_is_not_public()
     {
         var exception = Assert.Throws<WeavingException>(() => typeof(NonPublicClass).BuildExecuteDelegate());
-        Assert.AreEqual(exception.Message, "'ExecuteDelegateBuilderTests+NonPublicClass' must contain a public instance method named 'Execute'.");
+        Assert.Equal("'ExecuteDelegateBuilderTests+NonPublicClass' must contain a public instance method named 'Execute'.", exception.Message);
     }
 
     public class NonPublicClass
@@ -53,11 +53,11 @@ public class ExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_thrown_When_method_is_static()
     {
         var exception = Assert.Throws<WeavingException>(() => typeof(StaticExecuteClass).BuildExecuteDelegate());
-        Assert.AreEqual(exception.Message, "'ExecuteDelegateBuilderTests+StaticExecuteClass' must contain a public instance method named 'Execute'.");
+        Assert.Equal("'ExecuteDelegateBuilderTests+StaticExecuteClass' must contain a public instance method named 'Execute'.", exception.Message);
     }
 
     public class StaticExecuteClass
@@ -67,7 +67,7 @@ public class ExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_thrown_inner_exception_When_delegate_is_executed()
     {
         var action = typeof (ThrowFromExecuteClass).BuildExecuteDelegate();

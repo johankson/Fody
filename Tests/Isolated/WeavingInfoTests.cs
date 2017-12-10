@@ -3,12 +3,12 @@ using System.IO;
 using System.Linq;
 using Mono.Cecil;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class WeavingInfoTests
 {
-    [Test]
+    [Fact]
     public void WeavedAssembly_ShouldContainWeavedInfo()
     {
         var assemblyFilePath = $@"{AssemblyLocation.CurrentDirectory}\DummyAssembly.dll";
@@ -43,7 +43,8 @@ public class WeavingInfoTests
         {
             var type = readModule.Types
                 .Single(_ => _.Name == "ProcessedByFody");
-            Assert.IsTrue(type.Fields.Any(f => f.Name == "FodyIsolatedTests"));
+            var condition = type.Fields.Any(f => f.Name == "FodyIsolatedTests");
+            Assert.True(condition);
         }
     }
 }

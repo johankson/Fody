@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class WeaversXmlHistoryTests
 {
-    [Test]
+    [Fact]
     public void AddNewFile()
     {
         var fileName = Path.GetTempFileName();
@@ -23,7 +23,7 @@ public class WeaversXmlHistoryTests
             };
             processor.CheckForWeaversXmlChanged();
 
-            Assert.AreEqual(File.GetLastWriteTimeUtc(fileName), Processor.TimeStamps.First().Value);
+            Assert.Equal(File.GetLastWriteTimeUtc(fileName), Processor.TimeStamps.First().Value);
         }
         finally
         {
@@ -32,7 +32,7 @@ public class WeaversXmlHistoryTests
         }
     }
 
-    [Test]
+    [Fact]
     public void AddExistingFile()
     {
         var fileName = Path.GetTempFileName();
@@ -48,7 +48,7 @@ public class WeaversXmlHistoryTests
             processor.CheckForWeaversXmlChanged();
             processor.CheckForWeaversXmlChanged();
 
-            Assert.AreEqual(File.GetLastWriteTimeUtc(fileName), Processor.TimeStamps.First().Value);
+            Assert.Equal(File.GetLastWriteTimeUtc(fileName), Processor.TimeStamps.First().Value);
         }
         finally
         {
@@ -57,7 +57,7 @@ public class WeaversXmlHistoryTests
         }
     }
 
-    [Test]
+    [Fact]
     public void AddChangedFile()
     {
         var fileName = Path.GetTempFileName();
@@ -81,7 +81,7 @@ public class WeaversXmlHistoryTests
 
             loggerMock.Verify();
 
-            Assert.AreEqual(expected, Processor.TimeStamps.First().Value);
+            Assert.Equal(expected, Processor.TimeStamps.First().Value);
         }
         finally
         {

@@ -2,12 +2,12 @@ using System.IO;
 using ApprovalTests;
 using Fody;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class ProjectWeaversFinderTests
 {
-    [Test]
+    [Fact]
     public void NotFound()
     {
         var loggerMock = new Mock<BuildLogger>();

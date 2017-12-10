@@ -1,10 +1,10 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class AfterExecuteDelegateBuilderTests
 {
-    [Test]
+    [Fact]
     public void Should_not_throw_When_no_method()
     {
         typeof(NoExecuteClass).BuildAfterWeavingDelegate();
@@ -14,14 +14,14 @@ public class AfterExecuteDelegateBuilderTests
     {
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildAfterWeavingDelegate();
         action(new ValidClass());
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildAfterWeavingDelegate();
@@ -35,7 +35,7 @@ public class AfterExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_is_not_public()
     {
         typeof(NonPublicClass).BuildAfterWeavingDelegate();
@@ -50,7 +50,7 @@ public class AfterExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_is_static()
     {
         typeof(StaticExecuteClass).BuildAfterWeavingDelegate();
@@ -63,7 +63,7 @@ public class AfterExecuteDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_thrown_inner_exception_When_delegate_is_executed()
     {
         var action = typeof (ThrowFromExecuteClass).BuildAfterWeavingDelegate();

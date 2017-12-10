@@ -1,10 +1,10 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
-[TestFixture]
+
 public class CancelDelegateBuilderTests
 {
-    [Test]
+    [Fact]
     public void Should_not_throw_When_no_method()
     {
         typeof(NoCancelClass).BuildCancelDelegate();
@@ -14,14 +14,14 @@ public class CancelDelegateBuilderTests
     {
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildCancelDelegate();
         action(new ValidClass());
     }
 
-    [Test]
+    [Fact]
     public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildCancelDelegate();
@@ -35,7 +35,7 @@ public class CancelDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_is_not_public()
     {
         typeof(NonPublicClass).BuildCancelDelegate();
@@ -50,7 +50,7 @@ public class CancelDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_not_throw_When_method_is_static()
     {
         typeof(StaticExecuteClass).BuildCancelDelegate();
@@ -63,7 +63,7 @@ public class CancelDelegateBuilderTests
         }
     }
 
-    [Test]
+    [Fact]
     public void Should_thrown_inner_exception_When_delegate_is_executed()
     {
         var action = typeof (ThrowFromExecuteClass).BuildCancelDelegate();

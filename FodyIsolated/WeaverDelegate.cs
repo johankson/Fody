@@ -28,6 +28,7 @@ public class WeaverDelegate
     public Action<object, Action<string>> SetLogWarning;
     public Action<object, Action<string, SequencePoint>> SetLogWarningPoint;
     public Action<object, List<string>> SetDefineConstants;
-
     public Func<object> ConstructInstance;
+    public Action<object, Func<string, TypeDefinition>> SetFindType;
+    public Func<object, IEnumerable<string>> GetAssembliesForScanning;
 }

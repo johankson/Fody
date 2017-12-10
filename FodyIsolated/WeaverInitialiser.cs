@@ -32,6 +32,7 @@ public partial class InnerWeaver
         @delegate.SetLogError(weaverInstance, Logger.LogError);
         @delegate.SetLogErrorPoint(weaverInstance, LogErrorPoint);
         @delegate.SetDefineConstants(weaverInstance, DefineConstants);
+        @delegate.SetFindType(weaverInstance, FindType);
     }
 
     void LogWarningPoint(string message, SequencePoint point)

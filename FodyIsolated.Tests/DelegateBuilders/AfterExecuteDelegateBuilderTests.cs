@@ -5,7 +5,7 @@ using NUnit.Framework;
 public class AfterExecuteDelegateBuilderTests
 {
     [Test]
-    public void Should_not_throw_When_no_execute_method()
+    public void Should_not_throw_When_no_method()
     {
         typeof(NoExecuteClass).BuildAfterWeavingDelegate();
     }
@@ -15,14 +15,14 @@ public class AfterExecuteDelegateBuilderTests
     }
 
     [Test]
-    public void Find_and_execute()
+    public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildAfterWeavingDelegate();
         action(new ValidClass());
     }
 
     [Test]
-    public void Find_and_execute_from_interface()
+    public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildAfterWeavingDelegate();
         action(new WeaverFromBase());
@@ -36,7 +36,7 @@ public class AfterExecuteDelegateBuilderTests
     }
 
     [Test]
-    public void Should_not_throw_When_execute_is_not_public()
+    public void Should_not_throw_When_method_is_not_public()
     {
         typeof(NonPublicClass).BuildAfterWeavingDelegate();
     }

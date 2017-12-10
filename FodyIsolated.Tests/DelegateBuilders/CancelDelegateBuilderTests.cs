@@ -5,7 +5,7 @@ using NUnit.Framework;
 public class CancelDelegateBuilderTests
 {
     [Test]
-    public void Should_not_throw_When_no_cancel_method()
+    public void Should_not_throw_When_no_method()
     {
         typeof(NoCancelClass).BuildCancelDelegate();
     }
@@ -15,14 +15,14 @@ public class CancelDelegateBuilderTests
     }
 
     [Test]
-    public void Find_and_execute()
+    public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildCancelDelegate();
         action(new ValidClass());
     }
 
     [Test]
-    public void Find_and_execute_from_interface()
+    public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildCancelDelegate();
         action(new WeaverFromBase());
@@ -36,7 +36,7 @@ public class CancelDelegateBuilderTests
     }
 
     [Test]
-    public void Should_not_throw_When_cancel_is_not_public()
+    public void Should_not_throw_When_method_is_not_public()
     {
         typeof(NonPublicClass).BuildCancelDelegate();
     }

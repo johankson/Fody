@@ -9,6 +9,19 @@ using Mono.Cecil.Cil;
 
 public static class PropertyDelegateBuilder
 {
+    public static Action<object, Func<string, TypeDefinition>> BuildSetFindType(this Type weaverType)
+    {
+        if (weaverType.InheritsFromBaseWeaver())
+        {
+            return (target, action) =>
+            {
+                var baseModuleWeaver = (BaseModuleWeaver)target;
+                baseModuleWeaver.FindType = action;
+            };
+        }
+        return weaverType.BuildPropertySetDelegate<Func<string, TypeDefinition>>("FindType");
+    }
+
     public static Action<object, XElement> BuildSetConfig(this Type weaverType)
     {
         if (weaverType.InheritsFromBaseWeaver())

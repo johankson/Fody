@@ -1,11 +1,12 @@
 using System;
+using Fody;
 using NUnit.Framework;
 
 [TestFixture]
 public class ExecuteDelegateBuilderTests
 {
     [Test]
-    public void Should_throw_When_no_execute_method()
+    public void Should_throw_When_no_method()
     {
         var exception = Assert.Throws<WeavingException>(() => typeof(NoExecuteClass).BuildExecuteDelegate());
         Assert.AreEqual(exception.Message, "'ExecuteDelegateBuilderTests+NoExecuteClass' must contain a public instance method named 'Execute'.");
@@ -16,14 +17,14 @@ public class ExecuteDelegateBuilderTests
     }
 
     [Test]
-    public void Find_and_execute()
+    public void Find_and_run()
     {
         var action = typeof(ValidClass).BuildExecuteDelegate();
         action(new ValidClass());
     }
 
     [Test]
-    public void Find_and_execute_from_interface()
+    public void Find_and_run_from_interface()
     {
         var action = typeof(WeaverFromBase).BuildExecuteDelegate();
         action(new WeaverFromBase());
@@ -37,7 +38,7 @@ public class ExecuteDelegateBuilderTests
     }
 
     [Test]
-    public void Should_throw_When_execute_is_not_public()
+    public void Should_throw_When_method_is_not_public()
     {
         var exception = Assert.Throws<WeavingException>(() => typeof(NonPublicClass).BuildExecuteDelegate());
         Assert.AreEqual(exception.Message, "'ExecuteDelegateBuilderTests+NonPublicClass' must contain a public instance method named 'Execute'.");

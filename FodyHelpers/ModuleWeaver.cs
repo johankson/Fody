@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -120,6 +121,21 @@ namespace Fody
         public virtual void Cancel()
         {
         }
+
+        /// <summary>
+        /// Return a list of assembly names for scanning.
+        /// Used as a list for <see cref="FindType"/>.
+        /// </summary>
+        public virtual IEnumerable<string> GetAssembliesForScanning()
+        {
+            return Enumerable.Empty<string>();
+        }
+
+        /// <summary>
+        /// Handler for searching for a type.
+        /// Uses all assemblies listed from calling <see cref="GetAssembliesForScanning"/> on all weavers.
+        /// </summary>
+        public Func<string, TypeDefinition> FindType { get; set; } = _ => throw new WeavingException($"{nameof(FindType)} has not been set.");
 
         /// <summary>
         /// Called after all weaving has occurred and the module has been saved.

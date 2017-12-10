@@ -14,7 +14,6 @@ public class ToFriendlyStringTests
         try
         {
             ThrowException1();
-
         }
         catch (Exception exception)
         {

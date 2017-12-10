@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
+using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Mdb;
 using Mono.Cecil.Pdb;
@@ -30,7 +31,7 @@ public partial class InnerWeaver : MarshalByRefObject, IInnerWeaver
     bool cancelRequested;
     List<WeaverHolder> weaverInstances = new List<WeaverHolder>();
     Action cancelDelegate;
-    public IAssemblyResolver assemblyResolver;
+    public AssemblyResolver assemblyResolver;
 
     Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
@@ -84,6 +85,7 @@ public partial class InnerWeaver : MarshalByRefObject, IInnerWeaver
             ReadModule();
             AppDomain.CurrentDomain.AssemblyResolve += assemblyResolve;
             InitialiseWeavers();
+            BuildAssembliesToScan();
             ExecuteWeavers();
             AddWeavingInfo();
             FindStrongNameKey();

@@ -1,4 +1,5 @@
 using System.IO;
+using Fody;
 using NUnit.Framework;
 
 [TestFixture]

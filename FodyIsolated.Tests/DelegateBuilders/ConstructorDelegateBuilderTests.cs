@@ -1,4 +1,5 @@
 using System;
+using Fody;
 using NUnit.Framework;
 
 [TestFixture]
@@ -56,7 +57,7 @@ public class ConstructorDelegateBuilderTests
     }
 
     [Test]
-    public void Find_and_execute()
+    public void Find_and_run()
     {
         var type = typeof(ValidClass);
         var anObject = type.BuildConstructorDelegate()();
@@ -64,7 +65,7 @@ public class ConstructorDelegateBuilderTests
     }
 
     [Test]
-    public void Find_and_execute_from_interface()
+    public void Find_and_run_from_interface()
     {
         var type = typeof(WeaverFromBase);
         var anObject = type.BuildConstructorDelegate()();

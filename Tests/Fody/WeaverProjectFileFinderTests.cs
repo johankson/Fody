@@ -14,9 +14,9 @@ public class WeaverProjectFileFinderTests
         loggerMock.Setup(x => x.LogDebug(It.IsAny<string>()));
 
         var processor = new Processor
-            {
-                SolutionDirectory = combine,
-                Logger = loggerMock.Object,
+        {
+            SolutionDirectory = combine,
+            Logger = loggerMock.Object,
         };
 
         processor.FindWeaverProjectFile();
@@ -34,11 +34,11 @@ public class WeaverProjectFileFinderTests
         loggerMock.Setup(x => x.LogDebug(It.IsAny<string>()));
 
         var processor = new Processor
-            {
-                SolutionDirectory = combine,
-                Logger = loggerMock.Object,
-                References = ""
-            };
+        {
+            SolutionDirectory = combine,
+            Logger = loggerMock.Object,
+            References = ""
+        };
 
         processor.FindWeaverProjectFile();
         Assert.IsFalse(processor.FoundWeaverProjectFile);

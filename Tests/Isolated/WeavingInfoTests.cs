@@ -33,7 +33,7 @@ public class WeavingInfoTests
                 {
                     TypeName = "FakeModuleWeaver",
                     AssemblyName = "FodyIsolated.Tests",
-                    AssemblyPath = $@"{TestContext.CurrentContext.TestDirectory}\FodyIsolated.Tests.dll"
+                    AssemblyPath = $@"{TestContext.CurrentContext.TestDirectory}\Tests.dll"
                 }
             }
         };

@@ -8,7 +8,6 @@ public class GlobalSetUp
     [OneTimeSetUp]
     public void Setup()
     {
-        AssemblyLocation.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
     }
 

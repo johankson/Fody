@@ -11,10 +11,10 @@ public class WeavingInfoTests
     [Test]
     public void WeavedAssembly_ShouldContainWeavedInfo()
     {
-        var assemblyFilePath = $@"{TestContext.CurrentContext.TestDirectory}\DummyAssembly.dll";
-        var pdbFilePath = $@"{TestContext.CurrentContext.TestDirectory}\DummyAssembly.pdb";
-        var tempFilePath = $@"{TestContext.CurrentContext.TestDirectory}\Temp.dll";
-        var tempPdbFilePath = $@"{TestContext.CurrentContext.TestDirectory}\Temp.pdb";
+        var assemblyFilePath = $@"{AssemblyLocation.CurrentDirectory}\DummyAssembly.dll";
+        var pdbFilePath = $@"{AssemblyLocation.CurrentDirectory}\DummyAssembly.pdb";
+        var tempFilePath = $@"{AssemblyLocation.CurrentDirectory}\Temp.dll";
+        var tempPdbFilePath = $@"{AssemblyLocation.CurrentDirectory}\Temp.pdb";
         File.Copy(assemblyFilePath, tempFilePath, true);
         File.Copy(pdbFilePath, tempPdbFilePath, true);
         var innerWeaver = new InnerWeaver
@@ -33,7 +33,7 @@ public class WeavingInfoTests
                 {
                     TypeName = "FakeModuleWeaver",
                     AssemblyName = "FodyIsolated.Tests",
-                    AssemblyPath = $@"{TestContext.CurrentContext.TestDirectory}\Tests.dll"
+                    AssemblyPath = $@"{AssemblyLocation.CurrentDirectory}\Tests.dll"
                 }
             }
         };

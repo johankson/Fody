@@ -88,21 +88,6 @@ public class AssemblyResolver : IAssemblyResolver
             .Where(File.Exists);
     }
 
-    public AssemblyDefinition Resolve(string fullName)
-    {
-        return Resolve(AssemblyNameReference.Parse(fullName));
-    }
-
-    public AssemblyDefinition Resolve(string fullName, ReaderParameters parameters)
-    {
-        if (fullName == null)
-        {
-            throw new ArgumentNullException(nameof(fullName));
-        }
-
-        return Resolve(AssemblyNameReference.Parse(fullName), parameters);
-    }
-
     public void Dispose()
     {
         foreach (var value in assemblyDefinitionCache.Values)

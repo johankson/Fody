@@ -19,5 +19,4 @@ public partial class InnerWeaver
         ModuleDefinition.Write(AssemblyFilePath, parameters);
         Logger.LogDebug($"  Finished writing assembly {stopwatch.ElapsedMilliseconds}ms.");
     }
-
 }

@@ -91,7 +91,7 @@ public partial class InnerWeaver : MarshalByRefObject, IInnerWeaver
             FindStrongNameKey();
             WriteModule();
             ModuleDefinition?.Dispose();
-            SymbolStream?.Dispose();
+            CleanupTempSymbols();
             ExecuteAfterWeavers();
             DisposeWeavers();
         }
@@ -103,7 +103,7 @@ public partial class InnerWeaver : MarshalByRefObject, IInnerWeaver
         finally
         {
             ModuleDefinition?.Dispose();
-            SymbolStream?.Dispose();
+            CleanupTempSymbols();
             assemblyResolver?.Dispose();
         }
     }

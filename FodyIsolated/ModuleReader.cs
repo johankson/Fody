@@ -32,4 +32,9 @@ public partial class InnerWeaver
         };
         ModuleDefinition = ModuleDefinition.ReadModule(tempAssembly, readerParameters);
     }
+    void CleanupTempSymbols()
+    {
+        SymbolStream?.Dispose();
+        File.Delete(tempAssembly);
+    }
 }

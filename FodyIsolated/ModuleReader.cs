@@ -5,10 +5,11 @@ public partial class InnerWeaver
 {
     public ModuleDefinition ModuleDefinition;
     public FileStream SymbolStream;
+    string tempAssembly;
 
     public virtual void ReadModule()
     {
-        var tempAssembly = $"{AssemblyFilePath}.tmp";
+        tempAssembly = $"{AssemblyFilePath}.tmp";
         File.Copy(AssemblyFilePath, tempAssembly, true);
 
         if (debugReaderProvider != null)

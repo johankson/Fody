@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Fody;
@@ -19,7 +20,7 @@ public static class GetAssembliesForScanningDelegateBuilder
         var afterWeavingMethod = weaverType.GetMethod("GetAssembliesForScanning", BindingFlags.Instance | BindingFlags.Public, null, new Type[] { }, null);
         if (afterWeavingMethod == null)
         {
-            return null;
+            return o => Enumerable.Empty<string>();
         }
 
         var target = Expression.Parameter(typeof (object));

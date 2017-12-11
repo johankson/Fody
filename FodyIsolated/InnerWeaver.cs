@@ -279,5 +279,6 @@ public partial class InnerWeaver : MarshalByRefObject, IInnerWeaver
     {
         //Disconnects the remoting channel(s) of this object and all nested objects.
         RemotingServices.Disconnect(this);
+        File.Delete(tempAssembly);
     }
 }

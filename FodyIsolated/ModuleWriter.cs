@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IO;
 using Mono.Cecil;
 
 public partial class InnerWeaver
@@ -17,5 +18,6 @@ public partial class InnerWeaver
 
         ModuleDefinition.Write(AssemblyFilePath, parameters);
         Logger.LogDebug($"  Finished writing assembly {stopwatch.ElapsedMilliseconds}ms.");
+        File.Delete(tempAssembly);
     }
 }

@@ -7,14 +7,9 @@ using Mono.Cecil;
 
 public class AssemblyResolver : IAssemblyResolver
 {
-    // file name to path map
     Dictionary<string, string> referenceDictionary;
-    List<string> notFoundList = new List<string>();
     ILogger logger;
     List<string> splitReferences;
-    ReaderParameters readerParameters;
-
-    // file name to AssemblyDefinition map
     Dictionary<string, AssemblyDefinition> assemblyDefinitionCache = new Dictionary<string, AssemblyDefinition>(StringComparer.InvariantCultureIgnoreCase);
 
     public AssemblyResolver(Dictionary<string, string> referenceDictionary, ILogger logger, List<string> splitReferences)
@@ -22,84 +17,94 @@ public class AssemblyResolver : IAssemblyResolver
         this.referenceDictionary = referenceDictionary;
         this.logger = logger;
         this.splitReferences = splitReferences;
-        readerParameters = new ReaderParameters(ReadingMode.Deferred)
-        {
-            AssemblyResolver = this
-        };
     }
 
     protected AssemblyResolver()
     {
     }
 
-    AssemblyDefinition GetAssembly(string filePath)
+    AssemblyDefinition GetAssembly(string file, ReaderParameters parameters)
     {
-        var name = Path.GetFileNameWithoutExtension(filePath);
-        if (assemblyDefinitionCache.TryGetValue(name, out var assembly))
+        if (assemblyDefinitionCache.TryGetValue(file, out var assembly))
         {
             return assembly;
         }
+        if (parameters.AssemblyResolver == null)
+        {
+            parameters.AssemblyResolver = this;
+        }
         try
         {
-            return assemblyDefinitionCache[filePath] = AssemblyDefinition.ReadAssembly(filePath, readerParameters);
+            return assemblyDefinitionCache[file] = AssemblyDefinition.ReadAssembly(file, parameters);
         }
         catch (Exception exception)
         {
-            throw new Exception($"Could not read '{filePath}'.", exception);
+            throw new Exception($"Could not read '{file}'.", exception);
         }
     }
 
     public AssemblyDefinition Resolve(AssemblyNameReference assemblyNameReference)
     {
-        return Resolve(assemblyNameReference.Name);
+        return Resolve(assemblyNameReference, new ReaderParameters());
     }
 
     public AssemblyDefinition Resolve(AssemblyNameReference assemblyNameReference, ReaderParameters parameters)
     {
-        var assemblyName = assemblyNameReference.Name;
-        return Resolve(assemblyName);
+        if (parameters == null)
+        {
+            parameters = new ReaderParameters();
+        }
+
+        if (referenceDictionary.TryGetValue(assemblyNameReference.Name, out var fileFromDerivedReferences))
+        {
+            return GetAssembly(fileFromDerivedReferences, parameters);
+        }
+
+        return TryToReadFromDirs(assemblyNameReference, parameters);
     }
 
-    public AssemblyDefinition Resolve(string assemblyName)
+    AssemblyDefinition TryToReadFromDirs(AssemblyNameReference assemblyNameReference, ReaderParameters parameters)
     {
-        if (notFoundList.Contains(assemblyName))
+        var filesWithMatchingName = SearchDirForMatchingName(assemblyNameReference).ToList();
+        foreach (var filePath in filesWithMatchingName)
         {
-            return null;
+            var assemblyName = AssemblyName.GetAssemblyName(filePath);
+            if (assemblyNameReference.Version == null || assemblyName.Version == assemblyNameReference.Version)
+            {
+                return GetAssembly(filePath, parameters);
+            }
         }
-        if (referenceDictionary.TryGetValue(assemblyName, out var fileFromDerivedReferences))
+        foreach (var filePath in filesWithMatchingName.OrderByDescending(s => AssemblyName.GetAssemblyName(s).Version))
         {
-            return GetAssembly(fileFromDerivedReferences);
-        }
-
-        if (TryReadFromSiblings(assemblyName, out var assemblyDefinition))
-        {
-            return assemblyDefinition;
+            return GetAssembly(filePath, parameters);
         }
 
         var joinedReferences = string.Join(Environment.NewLine, splitReferences.OrderBy(x => x));
-        logger.LogDebug(string.Format("Can not find '{0}'.{1}Tried:{1}{2}", assemblyName, Environment.NewLine, joinedReferences));
+        logger.LogDebug(string.Format("Can not find '{0}'.{1}Tried:{1}{2}", assemblyNameReference.FullName, Environment.NewLine, joinedReferences));
         return null;
     }
 
-    private bool TryReadFromSiblings(string assemblyName, out AssemblyDefinition assemblyDefinition)
+    IEnumerable<string> SearchDirForMatchingName(AssemblyNameReference assemblyNameReference)
     {
-        var filesWithMatchingName = SearchDirForMatchingName(assemblyName).ToList();
-        foreach (var filePath in filesWithMatchingName.OrderByDescending(s => AssemblyName.GetAssemblyName(s).Version))
-        {
-            assemblyDefinition = GetAssembly(filePath);
-            return true;
-        }
-
-        assemblyDefinition = null;
-        return false;
-    }
-
-    IEnumerable<string> SearchDirForMatchingName(string assemblyName)
-    {
-        var fileName = $"{assemblyName}.dll";
+        var fileName = assemblyNameReference.Name + ".dll";
         return referenceDictionary.Values
             .Select(x => Path.Combine(Path.GetDirectoryName(x), fileName))
             .Where(File.Exists);
+    }
+
+    public AssemblyDefinition Resolve(string fullName)
+    {
+        return Resolve(AssemblyNameReference.Parse(fullName));
+    }
+
+    public AssemblyDefinition Resolve(string fullName, ReaderParameters parameters)
+    {
+        if (fullName == null)
+        {
+            throw new ArgumentNullException(nameof(fullName));
+        }
+
+        return Resolve(AssemblyNameReference.Parse(fullName), parameters);
     }
 
     public virtual void Dispose()

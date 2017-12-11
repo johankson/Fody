@@ -31,13 +31,13 @@ public class SolutionPathValidatorTests
         {
             var processor = new Processor
             {
-                SolutionDirectory = "aString"
+                SolutionDirectory = "baddir"
             };
             processor.ValidateSolutionPath();
         };
 #pragma warning disable xUnit2015 // Do not use typeof expression to check the exception type
         var exception = Assert.Throws(typeof(WeavingException),paramName);
 #pragma warning restore xUnit2015 // Do not use typeof expression to check the exception type
-        Assert.Equal($"SolutionDir \"{Path.GetFullPath("baddir")}aString\" does not exist.", exception.Message);
+        Assert.Equal($"SolutionDir \"{Path.GetFullPath("baddir")}\" does not exist.", exception.Message);
     }
 }

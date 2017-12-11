@@ -80,7 +80,7 @@ public class AssemblyResolver : IAssemblyResolver
         }
 
         var joinedReferences = string.Join(Environment.NewLine, splitReferences.OrderBy(x => x));
-        logger.LogDebug(string.Format("Can not find '{0}'.{1}Tried:{1}{2}", assemblyNameReference.FullName, Environment.NewLine, joinedReferences));
+        logger.LogDebug(string.Format("Can't find '{0}'.{1}Tried:{1}{2}", assemblyNameReference.FullName, Environment.NewLine, joinedReferences));
         return null;
     }
 

@@ -53,9 +53,9 @@ namespace Fody
         public Action<string, SequencePoint> LogErrorPoint { get; set; } = (m, p) => { };
 
         /// <summary>
-        /// An instance of <see cref="IAssemblyResolver"/> for resolving assembly references.
+        /// Handler for resolving <see cref="AssemblyDefinition"/>s.
         /// </summary>
-        public IAssemblyResolver AssemblyResolver { get; set; }
+        public Func<string, AssemblyDefinition> ResolveAssembly { get; set; }
 
         /// <summary>
         /// An instance of <see cref="ModuleDefinition"/> for processing.

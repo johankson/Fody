@@ -13,6 +13,7 @@ public class WeaverDelegate
     public Action<object, XElement> SetConfig;
     public Action<object, ModuleDefinition> SetModuleDefinition;
     public Action<object, IAssemblyResolver> SetAssemblyResolver;
+    public Action<object, Func<string, AssemblyDefinition>> SetResolveAssembly;
     public Action<object, string> SetAssemblyFilePath;
     public Action<object, string> SetAddinDirectoryPath;
     public Action<object, string> SetReferences;

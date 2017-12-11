@@ -207,15 +207,20 @@ public static class PropertyDelegateBuilder
 
     public static Action<object, IAssemblyResolver> BuildSetAssemblyResolver(this Type weaverType)
     {
+        return weaverType.BuildPropertySetDelegate<IAssemblyResolver>("AssemblyResolver");
+    }
+
+    public static Action<object, Func<string, AssemblyDefinition>> BuildSetResolveAssembly(this Type weaverType)
+    {
         if (weaverType.InheritsFromBaseWeaver())
         {
             return (target, resolver) =>
             {
                 var baseModuleWeaver = (BaseModuleWeaver)target;
-                baseModuleWeaver.AssemblyResolver = resolver;
+                baseModuleWeaver.ResolveAssembly = resolver;
             };
         }
-        return weaverType.BuildPropertySetDelegate<IAssemblyResolver>("AssemblyResolver");
+        return null;
     }
 
     public static Action<object, string> BuildSetAssemblyFilePath(this Type weaverType)

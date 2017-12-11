@@ -40,6 +40,7 @@ public static class DelegateBuilder
             SetAddinDirectoryPath = weaverType.BuildSetAddinDirectoryPath(),
             SetAssemblyFilePath = weaverType.BuildSetAssemblyFilePath(),
             SetAssemblyResolver = weaverType.BuildSetAssemblyResolver(),
+            SetResolveAssembly = weaverType.BuildSetResolveAssembly(),
             SetLogError = weaverType.BuildSetLogError(),
             SetLogErrorPoint = weaverType.BuildSetLogErrorPoint(),
             SetLogDebug = weaverType.BuildSetLogDebug(),

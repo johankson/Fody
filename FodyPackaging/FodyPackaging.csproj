@@ -6,6 +6,7 @@
     <Description>NuGet packaging Fody repositories</Description>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IsTool>true</IsTool>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

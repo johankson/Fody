@@ -9,6 +9,7 @@
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
     <DevelopmentDependency>true</DevelopmentDependency>
     <TaskDir>$(SolutionDir)ForIntegration\tasks\net46</TaskDir>
+    <TargetFramework>net462</TargetFramework>
 </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\NugetConfigReader.cs">
